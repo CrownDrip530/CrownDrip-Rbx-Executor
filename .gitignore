@@ -1,0 +1,20 @@
+# Visual Studio 暫存與編譯檔案
+[Bb]in/
+[Oo]bj/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# NuGet 套件 (通常不需要上傳，因為編譯時會自動下載)
+packages/
+*.nuget.props
+*.nuget.targets
+
+# 編譯日誌與輸出
+*.log
+*.tmp
+
+# 其他開發工具產生的檔案
+.vsconfig
