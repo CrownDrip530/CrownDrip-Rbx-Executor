@@ -1,0 +1,35 @@
+<details type="code_interpreter" done="true" duration="4">
+<summary>Analyzed</summary>
+```python
+import os
+
+# Define the content of the C# solution file
+solution_content = """
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30925.47
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crowndrip_UI", "src\\Crowndrip_UI\\Crowndrip_UI.csproj", "{YOUR-GUID-HERE}"
+EndProject
+Global
+    GlobalSection(SolutionConfigurationPlatforms) = preSolution
+        Debug|Any CPU = Debug|Any CPU
+        Release|Any CPU = Release|Any CPU
+    EndGlobalSection
+    GlobalSection(ProjectConfigurationPlatforms) = postSolution
+        {YOUR-GUID-HERE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {YOUR-GUID-HERE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {YOUR-GUID-HERE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {YOUR-GUID-HERE}.Release|Any CPU.Build.0 = Release|Any CPU
+    EndGlobalSection
+    GlobalSection(SolutionProperties) = preSolution
+        HideSolutionNode = FALSE
+    EndGlobalSection
+EndGlobal
+"""
+
+# Write the content to the C# solution file
+with open('/mnt/uploads/Crowndrip/Crowndrip.sln', 'w') as file:
+    file.write(solution_content)
+
+print("C# solution file created successfully!")
