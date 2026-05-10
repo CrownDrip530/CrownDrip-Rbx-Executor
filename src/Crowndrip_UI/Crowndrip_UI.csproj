@@ -1,0 +1,22 @@
+<details type="code_interpreter" done="true" duration="1">
+<summary>Analyzed</summary>
+```python
+import os
+
+# Define the content of the C# project file
+project_content = """
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ApplicationIcon>Resources\\icon.ico</ApplicationIcon>
+  </PropertyGroup>
+</Project>
+"""
+
+# Write the content to the C# project file
+with open('/mnt/uploads/Crowndrip/src/Crowndrip_UI/Crowndrip_UI.csproj', 'w') as file:
+    file.write(project_content)
+
+print("C# project file created successfully!")
