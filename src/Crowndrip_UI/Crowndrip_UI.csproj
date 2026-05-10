@@ -1,22 +1,29 @@
-<details type="code_interpreter" done="true" duration="1">
-<summary>Analyzed</summary>
-```python
-import os
-
-# Define the content of the C# project file
-project_content = """
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
-    <ApplicationIcon>Resources\\icon.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
+    <!-- 確保輸出檔案名稱為 Crowndrip -->
+    <AssemblyName>Crowndrip</AssemblyName>
+    <RootNamespace>Crowndrip_UI</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <!-- 關鍵：引用你的 WeAreDevs API -->
+    <Reference Include="wearedevs_exploit_api">
+      <HintPath>..\..\lib\wearedevs_exploit_api.dll</HintPath>
+      <!-- 設定編譯時自動複製到輸出目錄 -->
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- 確保圖示檔案會被包含在編譯中 -->
+    <None Update="Resources\icon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
-"""
-
-# Write the content to the C# project file
-with open('/mnt/uploads/Crowndrip/src/Crowndrip_UI/Crowndrip_UI.csproj', 'w') as file:
-    file.write(project_content)
-
-print("C# project file created successfully!")
