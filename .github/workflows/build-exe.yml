@@ -1,14 +1,12 @@
-name: Build Crowndrip Executor
+name: Build Crowndrip EXE (Direct Project Build)
 
-# 當你 Push 到 main 分支，或手動點擊 Actions 時會觸發
 on:
   push:
     branches: [ "main" ]
-  workflow_dispatch: 
+  workflow_dispatch: # 允許手動從 GitHub 網頁觸發
 
 jobs:
   build:
-    # 必須使用 windows 環境才能編譯 C# WinForms
     runs-on: windows-latest
 
     steps:
@@ -21,18 +19,25 @@ jobs:
     - name: Setup NuGet
       uses: nuget/setup-nuget@v2
 
+    # 方案 A：直接對專案檔進行 NuGet 還原，跳過 .sln
     - name: Restore NuGet Packages
-      run: nuget restore Crowndrip.sln
+      run: nuget restore src/Crowndrip_UI/Crowndrip_UI.csproj
 
-    - name: Build Crowndrip (Release)
-      # 這裡會編譯你的解決方案，產生成品到 bin/Release
-      run: msbuild Crowndrip.sln /p:Configuration=Release /p:Platform="Any CPU"
+    # 方案 A：直接編譯 .csproj 檔案
+    # 這會避開 "No file format header found" 的 .sln 錯誤
+    - name: Build Project (Release)
+      run: |
+        msbuild src/Crowndrip_UI/Crowndrip_UI.csproj `
+        /p:Configuration=Release `
+        /p:Platform="Any CPU" `
+        /p:OutputPath=../../build/Latest_Version/
 
-    - name: Upload Finished Executor
+    # 上傳編譯成品
+    - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
         name: Crowndrip-Release-Package
-        # 這裡會抓取 bin/Release 裡面所有的 exe 和 dll
+        # 這裡會抓取我們指定的輸出目錄中所有的執行檔與 DLL
         path: |
-          **/bin/Release/*.exe
-          **/bin/Release/*.dll
+          build/Latest_Version/*.exe
+          build/Latest_Version/*.dll
