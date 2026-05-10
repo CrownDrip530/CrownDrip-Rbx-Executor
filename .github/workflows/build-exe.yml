@@ -1,0 +1,38 @@
+name: Build Crowndrip Executor
+
+# 當你 Push 到 main 分支，或手動點擊 Actions 時會觸發
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch: 
+
+jobs:
+  build:
+    # 必須使用 windows 環境才能編譯 C# WinForms
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Setup NuGet
+      uses: nuget/setup-nuget@v2
+
+    - name: Restore NuGet Packages
+      run: nuget restore Crowndrip.sln
+
+    - name: Build Crowndrip (Release)
+      # 這裡會編譯你的解決方案，產生成品到 bin/Release
+      run: msbuild Crowndrip.sln /p:Configuration=Release /p:Platform="Any CPU"
+
+    - name: Upload Finished Executor
+      uses: actions/upload-artifact@v4
+      with:
+        name: Crowndrip-Release-Package
+        # 這裡會抓取 bin/Release 裡面所有的 exe 和 dll
+        path: |
+          **/bin/Release/*.exe
+          **/bin/Release/*.dll
