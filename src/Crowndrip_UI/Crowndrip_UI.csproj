@@ -1,26 +1,24 @@
-<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net5.0-windows</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
-    <!-- 確保輸出檔案名稱為 Crowndrip -->
     <AssemblyName>Crowndrip</AssemblyName>
-    <RootNamespace>Crowndrip_UI</RootNamespace>
+    <RootNamespace>CrownDripExecutor</RootNamespace>
+    <Platforms>x64</Platforms>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- 關鍵：引用你的 WeAreDevs API -->
     <Reference Include="wearedevs_exploit_api">
       <HintPath>..\..\lib\wearedevs_exploit_api.dll</HintPath>
-      <!-- 設定編譯時自動複製到輸出目錄 -->
       <Private>True</Private>
     </Reference>
   </ItemGroup>
 
   <ItemGroup>
-    <!-- 確保圖示檔案會被包含在編譯中 -->
     <None Update="Resources\icon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

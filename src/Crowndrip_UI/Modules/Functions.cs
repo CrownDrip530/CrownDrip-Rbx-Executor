@@ -1,10 +1,3 @@
-<details type="code_interpreter" done="true" duration="4">
-<summary>Analyzed</summary>
-```python
-import os
-
-# Define the content of the C# functions script
-functions_content = """
 using System;
 using System.IO;
 
@@ -47,10 +40,3 @@ namespace CrownDripExecutor.Modules
         }
     }
 }
-"""
-
-# Write the content to the C# functions script file
-with open('/mnt/uploads/Crowndrip/src/Crowndrip_UI/Modules/Functions.cs', 'w') as file:
-    file.write(functions_content)
-
-print("C# functions script created successfully!")
