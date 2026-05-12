@@ -4,12 +4,8 @@ using System.Windows.Forms;
 
 namespace CrownDripExecutor
 {
-    public class MainForm : Form
+    public partial class MainForm : Form  // Added "partial"
     {
-        private Button attachButton;
-        private Button detachButton;
-        private Label titleLabel;
-
         [DllImport("wearedevs_exploit_api.dll")]
         private static extern void AttachToRoblox();
 
@@ -22,25 +18,9 @@ namespace CrownDripExecutor
             this.Icon = System.Drawing.Icon.ExtractAssociatedIcon("icon.ico"); 
             this.StartPosition = FormStartPosition.CenterScreen;
             this.Size = new System.Drawing.Size(300, 200);
-
-            titleLabel = new Label();
-            titleLabel.Text = "CrownDrip Executor";
-            titleLabel.Font = new System.Drawing.Font("Helvetica", 16, System.Drawing.FontStyle.Bold);
-            titleLabel.AutoSize = true;
-            titleLabel.Location = new System.Drawing.Point(50, 20);
-            this.Controls.Add(titleLabel);
-
-            attachButton = new Button();
-            attachButton.Text = "Attach to Roblox";
-            attachButton.Location = new System.Drawing.Point(75, 80);
-            attachButton.Click += new EventHandler(AttachToRobloxClick);
-            this.Controls.Add(attachButton);
-
-            detachButton = new Button();
-            detachButton.Text = "Detach from Roblox";
-            detachButton.Location = new System.Drawing.Point(75, 120);
-            detachButton.Click += new EventHandler(DetachFromRobloxClick);
-            this.Controls.Add(detachButton);
+            
+            // Add this line to call the designer initialization
+            InitializeComponent();
         }
 
         private void AttachToRobloxClick(object sender, EventArgs e)
