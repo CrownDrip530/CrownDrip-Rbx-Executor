@@ -1,10 +1,3 @@
-<details type="code_interpreter" done="true" duration="8">
-<summary>Analyzed</summary>
-```python
-import os
-
-# Define the content of the C# designer script
-designer_content = """
 namespace CrownDripExecutor
 {
     partial class MainForm
@@ -73,10 +66,3 @@ namespace CrownDripExecutor
         private System.Windows.Forms.Label titleLabel;
     }
 }
-"""
-
-# Write the content to the C# designer script file
-with open('/mnt/uploads/Crowndrip/src/Crowndrip_UI/Form1.Designer.cs', 'w') as file:
-    file.write(designer_content)
-
-print("C# designer script created successfully!")
