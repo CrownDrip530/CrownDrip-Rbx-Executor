@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace CrownDripExecutor
 {
-    public partial class MainForm : Form  // Added "partial"
+    public partial class MainForm : Form
     {
         [DllImport("wearedevs_exploit_api.dll")]
         private static extern void AttachToRoblox();
@@ -35,14 +35,6 @@ namespace CrownDripExecutor
             DetachFromRoblox();
             MessageBox.Show("Detached from Roblox!");
             attachButton.BackColor = System.Drawing.SystemColors.Control;
-        }
-
-        [STAThread]
-        static void Main()
-        {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
         }
     }
 }
