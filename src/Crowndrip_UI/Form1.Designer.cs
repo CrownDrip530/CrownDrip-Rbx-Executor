@@ -28,6 +28,7 @@ namespace CrownDripExecutor
             this.attachButton.TabIndex = 0;
             this.attachButton.Text = "Attach to Roblox";
             this.attachButton.UseVisualStyleBackColor = true;
+            this.attachButton.Click += new System.EventHandler(this.AttachToRobloxClick);
             //
             // detachButton
             //
@@ -37,6 +38,7 @@ namespace CrownDripExecutor
             this.detachButton.TabIndex = 1;
             this.detachButton.Text = "Detach from Roblox";
             this.detachButton.UseVisualStyleBackColor = true;
+            this.detachButton.Click += new System.EventHandler(this.DetachFromRobloxClick);
             //
             // titleLabel
             //
