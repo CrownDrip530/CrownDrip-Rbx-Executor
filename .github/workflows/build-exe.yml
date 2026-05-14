@@ -19,25 +19,24 @@ jobs:
     - name: Setup NuGet
       uses: nuget/setup-nuget@v2
 
-    # 方案 A：直接對專案檔進行 NuGet 還原，跳過 .sln
+    # 對專案檔進行 NuGet 還原
     - name: Restore NuGet Packages
       run: nuget restore src/Crowndrip_UI/Crowndrip_UI.csproj
 
-    # 方案 A：直接編譯 .csproj 檔案
-    # 這會避開 "No file format header found" 的 .sln 錯誤
-    - name: Build Project (Release)
+    # 強制編譯為 64 位元 (x64) 架構，解決 Windows 64-bit runtime 報錯問題
+    - name: Build Project (Release x64)
       run: |
         msbuild src/Crowndrip_UI/Crowndrip_UI.csproj `
         /p:Configuration=Release `
-        /p:Platform="Any CPU" `
-        /p:OutputPath=../../build/Latest_Version/
+        /p:Platform="x64" `
+        /p:Prefer32Bit=false `
+        /p:OutputPath="../../build/Latest_Version/"
 
-    # 上傳編譯成品
+    # 上傳編譯成品 (包含 64 位元執行檔與所有相依 DLL)
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
         name: Crowndrip-Release-Package
-        # 這裡會抓取我們指定的輸出目錄中所有的執行檔與 DLL
         path: |
           build/Latest_Version/*.exe
           build/Latest_Version/*.dll
