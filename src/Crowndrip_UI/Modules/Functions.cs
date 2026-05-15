@@ -1,42 +1,41 @@
-using System;
-using System.IO;
-
-namespace CrownDripExecutor.Modules
+public static object CallExploitApiFunction(string functionName, params object[] args)
 {
-    public static class Functions
+    try
     {
-        /// <summary>
-        /// Writes a log message to a file.
-        /// </summary>
-        /// <param name="message">The log message to write.</param>
-        public static void Log(string message)
+        string dllPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "wearedevs_exploit_api.dll");
+        
+        if (!File.Exists(dllPath))
         {
-            string logFilePath = "log.txt";
-            using (StreamWriter writer = new StreamWriter(logFilePath, true))
-            {
-                writer.WriteLine($"{DateTime.Now}: {message}");
-            }
+            Log($"錯誤：找不到 DLL 檔案，路徑應為: {dllPath}");
+            return null;
         }
 
-        /// <summary>
-        /// Calls a function from the wearedevs_exploit_api.dll.
-        /// </summary>
-        /// <param name="functionName">The name of the function to call.</param>
-        /// <param name="args">The arguments to pass to the function.</param>
-        /// <returns>The result of the function call.</returns>
-        public static object CallExploitApiFunction(string functionName, params object[] args)
+        // 載入 DLL
+        System.Reflection.Assembly assembly = System.Reflection.Assembly.LoadFrom(dllPath);
+
+        // 取得類別
+        System.Type type = assembly.GetType("WeAreDevs.ExploitAPI");
+        if (type == null)
         {
-            // Load the DLL
-            System.Reflection.Assembly assembly = System.Reflection.Assembly.LoadFrom("wearedevs_exploit_api.dll");
-
-            // Get the type of the class containing the function
-            System.Type type = assembly.GetType("WeAreDevs.ExploitAPI");
-
-            // Get the method info
-            System.Reflection.MethodInfo methodInfo = type.GetMethod(functionName);
-
-            // Invoke the method
-            return methodInfo.Invoke(null, args);
+            Log("錯誤：在 DLL 中找不到 'WeAreDevs.ExploitAPI' 類別。");
+            return null;
         }
+
+        // 取得方法
+        System.Reflection.MethodInfo methodInfo = type.GetMethod(functionName);
+        if (methodInfo == null)
+        {
+            Log($"錯誤：在 API 中找不到名為 '{functionName}' 的方法。");
+            return null;
+        }
+
+        // 執行方法
+        return methodInfo.Invoke(null, args);
+    }
+    catch (Exception ex)
+    {
+        // 將所有可能發生的錯誤記錄到 log.txt 中
+        Log($"執行 API 函數 '{functionName}' 時發生致命錯誤: {ex.Message}\n{ex.StackTrace}");
+        return null;
     }
 }
