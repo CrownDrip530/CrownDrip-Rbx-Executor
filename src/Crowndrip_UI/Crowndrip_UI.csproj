@@ -2,19 +2,32 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <!-- 將目標框架升級至長期支援、GitHub Actions 完美相容的 .NET 8.0 -->
+    <TargetFramework>net8.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
     <AssemblyName>Crowndrip</AssemblyName>
     <RootNamespace>CrownDripExecutor</RootNamespace>
+    
+    <!-- 核心修正：強制約束編譯與發行模式為 Windows 64位元與完整外部釋放 -->
+    <Platform>x64</Platform>
     <Platforms>x64</Platforms>
     <PlatformTarget>x64</PlatformTarget>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    
+    <!-- 啟用自我包含與多檔案輸出，確保所有相依 DLL 完整釋放，不壓縮至單一檔 -->
+    <SelfContained>true</SelfContained>
+    <PublishSingleFile>false</PublishSingleFile>
+    <IncludeNativeLibrariesForSelfContained>true</IncludeNativeLibrariesForSelfContained>
   </PropertyGroup>
 
   <ItemGroup>
     <Reference Include="wearedevs_exploit_api">
+      <!-- 修正相對路徑，確保 GitHub Actions 虛擬機編譯時能準確找到 lib 目錄下的 dll -->
       <HintPath>..\..\lib\wearedevs_exploit_api.dll</HintPath>
+      <!-- 強制將此第三方 DLL 複製到輸出目錄 -->
       <Private>True</Private>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Reference>
   </ItemGroup>
 
