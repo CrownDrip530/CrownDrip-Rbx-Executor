@@ -19,9 +19,9 @@ namespace CrownDripExecutor
             this.detachButton = new System.Windows.Forms.Button();
             this.titleLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            //
+            // 
             // attachButton
-            //
+            // 
             this.attachButton.Location = new System.Drawing.Point(75, 80);
             this.attachButton.Name = "attachButton";
             this.attachButton.Size = new System.Drawing.Size(150, 23);
@@ -29,9 +29,9 @@ namespace CrownDripExecutor
             this.attachButton.Text = "Attach to Roblox";
             this.attachButton.UseVisualStyleBackColor = true;
             this.attachButton.Click += new System.EventHandler(this.AttachToRobloxClick);
-            //
+            // 
             // detachButton
-            //
+            // 
             this.detachButton.Location = new System.Drawing.Point(75, 120);
             this.detachButton.Name = "detachButton";
             this.detachButton.Size = new System.Drawing.Size(150, 23);
@@ -39,19 +39,20 @@ namespace CrownDripExecutor
             this.detachButton.Text = "Detach from Roblox";
             this.detachButton.UseVisualStyleBackColor = true;
             this.detachButton.Click += new System.EventHandler(this.DetachFromRobloxClick);
-            //
+            // 
             // titleLabel
-            //
+            // 
             this.titleLabel.AutoSize = true;
-            this.titleLabel.Font = new System.Drawing.Font("Helvetica", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            // 核心修正：移除舊版 .NET Framework 的 ((byte)(0)) 轉換，改用符合 .NET 8 規範的字型初始化
+            this.titleLabel.Font = new System.Drawing.Font("Helvetica", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.titleLabel.Location = new System.Drawing.Point(50, 20);
             this.titleLabel.Name = "titleLabel";
             this.titleLabel.Size = new System.Drawing.Size(200, 27);
             this.titleLabel.TabIndex = 2;
             this.titleLabel.Text = "CrownDrip Executor";
-            //
+            // 
             // MainForm
-            //
+            // 
             this.ClientSize = new System.Drawing.Size(300, 200);
             this.Controls.Add(this.titleLabel);
             this.Controls.Add(this.detachButton);
