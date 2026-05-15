@@ -13,26 +13,28 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
 
-    - name: Setup MSBuild
-      uses: microsoft/setup-msbuild@v2
+    # 設置現代 .NET 核心環境
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x' # 如果專案是 .NET 9，請改為 '9.0.x'
 
-    - name: Setup NuGet
-      uses: nuget/setup-nuget@v2
+    # 現代化還原機制，確保 64位元 套件正確下載
+    - name: Restore Dependencies
+      run: dotnet restore src/Crowndrip_UI/Crowndrip_UI.csproj -r win-x64
 
-    # 對專案檔進行 NuGet 還原
-    - name: Restore NuGet Packages
-      run: nuget restore src/Crowndrip_UI/Crowndrip_UI.csproj
-
-    # 強制編譯為 64 位元 (x64) 架構，解決 Windows 64-bit runtime 報錯問題
-    - name: Build Project (Release x64)
+    # 強制發行為 64位元 (x64) 且將所有 Runtime DLL 完整釋放至輸出目錄
+    - name: Publish Project (Release x64 with DLLs)
       run: |
-        msbuild src/Crowndrip_UI/Crowndrip_UI.csproj `
-        /p:Configuration=Release `
-        /p:Platform="x64" `
-        /p:Prefer32Bit=false `
-        /p:OutputPath="../../build/Latest_Version/"
+        dotnet publish src/Crowndrip_UI/Crowndrip_UI.csproj `
+          -c Release `
+          -r win-x64 `
+          --self-contained true `
+          -p:PublishSingleFile=false `
+          -p:PublishReadyToRun=true `
+          -o "build/Latest_Version"
 
-    # 上傳編譯成品 (包含 64 位元執行檔與所有相依 DLL)
+    # 上傳編譯成品 (這裡明確指示上傳該目錄下的所有 exe 與 dll)
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
